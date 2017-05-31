@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="assets/css/bootstrap.css">
+	<link rel="stylesheet" href="assets/css/ilmudetil.css">
+    <script type='text/javascript' 
+			src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' 
+			async defer>
+	</script>
+    <script type="text/javascript">
+	var map = null, infobox, dataLayer;
+
+	function GetMap() 
+	{
+		// Seting Map Options
+		map = new Microsoft.Maps.Map(document.getElementById("myMap"),
+	    {
+			credentials: "U4VD6Xi1NuVkAaN8KvJF~dereRmfzkm5VdVorK5lmlA~Ar4MuDpGzRmqdUtbXYvjm31t06tAU-400GnsVAY8Zna23hb05WjeiHiszdHOEAXU",
+			center: new Microsoft.Maps.Location(4.660177, 97.012866), // Kordinat bener meriah
+			mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+			zoom: 8
+		});
+	
+		//Membuat jendela infobox berada di tengah pin (tidak ditampilkan)
+		infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
+			visible: false
+		});
+		//Assign infobox pada variabel map
+		infobox.setMap(map);
+	
+		AddData();
+	}
+
+// Fungsi create pin, metadata dan event click
+function AddData() {
+    //Create Pin
+	var pin1 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(3.818570, 96.831841));
+    //Menyimpan informasi metadata pada pushpin.
+	pin1.metadata = {
+		 title: 'Keterangan',
+		 description: 'Ibukota Abdya'
+	};
+    // Menambah penanganan event click pada pushpin
+	Microsoft.Maps.Events.addHandler(pin1, 'click', pushpinClicked);
+	//Memasang entitas pushpin pada peta
+	map.entities.push(pin1);
+
+    var pin2 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(4.727890, 95.601373),{color: 'red'});
+    pin2.metadata = {
+		 title: 'Keterangan',
+		 description: 'Ibukota Kab.Aceh Jaya'
+		};
+    Microsoft.Maps.Events.addHandler(pin2, 'click', pushpinClicked);
+	map.entities.push(pin2);
+	
+	//Untuk Kota Sabang
+	var pin3 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(5.909284, 95.304742),{color: 'yellow'});
+    pin3.metadata = {
+		 title: 'Keterangan',
+		 description: 'Ibukota Kotamadya Sabang'
+		};
+    Microsoft.Maps.Events.addHandler(pin3, 'click', pushpinClicked);
+	map.entities.push(pin3);
+	
+	//Untuk Kota Langsa
+	var pin4 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(4.476020, 97.952447),{color: 'blue'});
+    pin4.metadata = {
+		 title: 'Keterangan',
+		 description: 'Ibukota Kotamadya Langsa'
+		};
+    Microsoft.Maps.Events.addHandler(pin4, 'click', pushpinClicked);
+	map.entities.push(pin4);
+}
+
+ function pushpinClicked(e) {
+        //Memastika apakah infobox memiliki metadata untuk ditampilkan
+        if (e.target.metadata) {
+           //Menambah metadata pushpin pada option di infobox
+            infobox.setOptions({
+                location: e.target.getLocation(),
+                title: e.target.metadata.title,
+                description: e.target.metadata.description,
+                visible: true
+            });
+        }
+    }
+</script>
+	
+</head>
+<body onload="GetMap();">
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="index.html">
+			Pusat Ilmu Secara Detil</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-left">
+				<li class="clr1 active"><a href="index.html">Home</a></li>
+				<li class="clr2"><a href="">Programming</a></li>
+				<li class="clr3"><a href="">English</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+</br></br></br></br>
+<!--- Bagian Judul-->	
+<div class="container" style="margin-top:10px">	
+	<div class="row">
+		<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">Pin Bing Maps</div>
+					<div class="panel-body">
+						<div id="myMap" style="width:700px; height:700px"></div>
+					</div>
+			</div>
+		</div>	
+	</div>
+</div>	
+</body>
+</html>
